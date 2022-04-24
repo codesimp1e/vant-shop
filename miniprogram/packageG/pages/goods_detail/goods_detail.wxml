@@ -1,0 +1,2 @@
+<!--packageG/pages/goods_detail/goods_detail.wxml-->
+<text>{{goods_id}}</text>

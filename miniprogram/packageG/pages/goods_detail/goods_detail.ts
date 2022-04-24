@@ -1,43 +1,20 @@
-// pages/home/home.ts
-import { myRequest } from '../../utils/util'
-
+// packageG/pages/goods_detail/goods_detail.ts
 Page({
 
     /**
      * 页面的初始数据
      */
     data: {
-        swiperList: [],
-        navList:[]
+        goods_id:0
     },
-    fetchSwiperList() {
-        myRequest({
-            url: "https://www.escook.cn/api/public/v1/home/swiperdata",
-            method: "GET",
-            success: (res) => {
-                this.setData({
-                    'swiperList': res.data.message
-                })
-            }
-        })
-    },
-    fetchNavList(){
-        myRequest({
-            url: "https://www.escook.cn/api/public/v1/home/catitems",
-            method: "GET",
-            success: (res) => {
-                this.setData({
-                    'navList': res.data.message
-                })
-            }
-        })
-    },
+
     /**
      * 生命周期函数--监听页面加载
      */
-    onLoad() {
-        this.fetchSwiperList()
-        this.fetchNavList()
+    onLoad(options) {
+        this.setData({
+            'goods_id':options.goods_id
+        })
     },
 
     /**

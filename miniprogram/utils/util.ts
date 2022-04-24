@@ -1,19 +1,30 @@
-export const formatTime = (date: Date) => {
-  const year = date.getFullYear()
-  const month = date.getMonth() + 1
-  const day = date.getDate()
-  const hour = date.getHours()
-  const minute = date.getMinutes()
-  const second = date.getSeconds()
-
-  return (
-    [year, month, day].map(formatNumber).join('/') +
-    ' ' +
-    [hour, minute, second].map(formatNumber).join(':')
-  )
+import { WechatMiniprogram } from '../node_modules/@types/wechat-miniprogram/lib.wx.api'
+type RequestSuccessCallback<T> = WechatMiniprogram.RequestSuccessCallback
+type RequsetMethod = "OPTIONS" | "GET" | "HEAD" | "POST" | "PUT" | "DELETE" | "TRACE" | "CONNECT" | undefined
+type RequestOptions = {
+    url:string
+    method:RequsetMethod
+    success?:RequestSuccessCallback<string | ArrayBuffer | Record<string, any>>
+}
+function myRequest(options:RequestOptions) {
+    wx.showLoading({
+        title: "数据加载中"
+    })
+    wx.request({
+        url: options.url,
+        method: options.method,
+        success: options.success,
+        fail: () => {
+            wx.showToast({
+                title: "加载失败",
+                icon: "error",
+                duration: 1500
+            })
+        },
+        complete: () => {
+            wx.hideLoading()
+        }
+    })
 }
 
-const formatNumber = (n: number) => {
-  const s = n.toString()
-  return s[1] ? s : '0' + s
-}
+export { myRequest }
